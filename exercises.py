@@ -140,6 +140,14 @@ def featuresExtractor_SkewColors(image):
     values = [skew(image[:,:,0].ravel()), 0, 0 ]
     return values
 
+def cosineSimilarity( featuresQuery, featuresImage ):
+    val = 1.0 - spatial.distance.cosine( np.array( featuresImage ), np.array( featuresQuery ))
+    return val
+
+def euclideanSimilarity(featuresQuery, featuresImage):
+    val = 1.0 - spatial.distance.euclidean( np.array( featuresImage ), np.array( featuresQuery ))
+    return val
+
 def exercise1():
     print("Exercise 1")
 
@@ -152,20 +160,96 @@ def exercise1():
     #e1.display(scale = 1.0)
 
     #print("\tExercise 1.3")
-    #e1 = Exercise("exercise1/intro/", featuresNames_SkewColors, featuresExtractor_SkewColors)
+    #e1 = Exercise("images/exercise1/intro/", featuresNames_SkewColors, featuresExtractor_SkewColors)
     #e1.display(scale = 1.0)
 
-    print("\tExercise 1.4")
-    e1 = Exercise("exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
-    e1.display(scale = 1.0)
-    
+    #print("\tExercise 1.4")
+    #e1 = Exercise("images/exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
+    #e1.display(scale = 1.0)
+
+    #print("\tExercise 1.5")
+    e1 = Exercise("images/exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
+    #e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity )
+
+    #print("\tExercise 1.6")
+    #e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity)
+
+    #print("\tExercise 1.7")
+    #e1.searchForImage("images/exercise1/query/", "q3_blue.jpg", cosineSimilarity)
+
+    #print("\tExercise 1.8")
+    #e1.searchForImage("images/exercise1/query/", "q4_white.jpg", cosineSimilarity)
+
+    #print("\tExercise 1.9")
+    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", cosineSimilarity)
+
+    #print("\tExercise 1.10")
+    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
+
+    #print("\tExercise 1.11")
+    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
+
+    print("\tExercise 1.12")
+    e1.searchForImage("images/exercise1/query/", "q4_white.jpg", euclideanSimilarity)
+
+#centroid
+featuresNames_CentroidColors = ["red x", "red y",
+                 "green x", "green y",
+                 "blue x", "blue y"]
+featuresNames_Hu = ["hu1", "hu2", "hu3","hu4", "hu5", "hu6","hu7"]
+
+def featuresExtractor_CentroidColors( image ):
+    valueList = []
+
+    for x in range(0, 6):
+        valueList.append( center_of_mass( image[x] ) )
+    valueList = [i[0] for i in valueList]
+        
+    return valueList
+
+norm = lambda x: -np.sign(x)*np.log10(np.abs(x))
+
+
+def featuresExtractor_Hu(image):
+    img = rgb2gray(image)
+    hu = moments_central(img)
+    hu = moments_central(hu)
+    hu = moments_hu(hu)
+    l = [norm(f) for f in hu]
+    return l
+
 def exercise2():
     print("Exercise 2")
+    print("\tExercise 2.1")
+    e2 = Exercise("images/exercise1/intro/", featuresNames_CentroidColors, featuresExtractor_CentroidColors)
+    e2.display(scale = 1.0)
+
+    print("\tExercise 2.2a).")
+    scale = 1.0
+    figure(figsize=(9.0 * scale, 4.0 * scale), dpi=80)
+    subplot(2, 2, 1); plt.imshow(io.imread("images/exercise2/base/hu1.jpg")) 
+    subplot(2, 2, 2); plt.imshow(io.imread("images/exercise2/base/hu2.jpg")) 
+    subplot(2, 2, 3); plt.imshow(io.imread("images/exercise2/base/hu3.jpg")) 
+    subplot(2, 2, 4); plt.imshow(io.imread("images/exercise2/base/hu4.jpg")) 
+    plt.show()
+
+    print("\tExercise 2.2b).")
+    e2 = Exercise("images/exercise2/base/", featuresNames_Hu, featuresExtractor_Hu)
+
+    print("\tExercise 2.3")
+    e2.searchForImage("images/exercise2/query/", "q1.jpg", cosineSimilarity)
+
+    print("\tExercise 2.4")
+    e2.searchForImage("images/exercise2/query/", "q2.jpg", cosineSimilarity)
+
+def exercise3():
+    
 
 #===== EXECUTE MAIN ======
 
 def main():
-    exercise1()
-    exercise2()
+    #exercise1()
+    #exercise2()
+    exercise3()
 
 main()
