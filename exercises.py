@@ -242,9 +242,95 @@ def exercise2():
     print("\tExercise 2.4")
     e2.searchForImage("images/exercise2/query/", "q2.jpg", cosineSimilarity)
 
-def exercise3():
-    
+#VARIABLE FOR EXERCISE 3
+angles = [0, 30, 60, 90]
+freqs = [0.03, 0.05, 0.07, 0.09]
+scale = 1.0
+kernels = []
+std = 10.0
 
+def applyGaborsFilters(image):
+    return generateOutputImageUseGaborFilter(image)
+
+def runBaseGaborFilterScript():
+    #angles = [0, 45, 10, 65] #my example
+    #freqs = [0.2, 0.3, 0.6, 0.9] #my example
+    for angle in angles:
+        kernels_row = []
+        figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
+        num = 0
+        for freq in freqs:
+            num += 1
+            kernel = np.real(gabor_kernel(freq, theta=angle / 90.0 * 0.5 * np.pi, sigma_x=std, sigma_y=std))
+            kernels_row.append(kernel)
+            subplot(1, 4, num); plt.imshow(kernel, cmap='jet', vmin=-0.002, vmax=0.002) 
+            plt.colorbar(orientation='horizontal', ticks = [-0.002, 0.0, 0.002])
+        kernels.append(kernels_row)
+    plt.show()
+
+def generateOutputImageUseGaborFilter(image):
+    runBaseGaborFilterScript()
+    
+    if image is None:
+        image = rgb2gray(io.imread("images/exercise3/base/b1.jpg"))
+    else:
+        image = rgb2gray(image)
+
+    io.imshow(image)
+
+    # TODO: init sum_image with zeros (np. zero). The matrix must be of a proper size (image.shape)
+    # DONE!
+    sum_image = np.zeros(image.shape)
+    
+    for row in kernels:
+        figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
+        num = 0
+        for kernel in row:
+            num += 1
+            img_convolve = fftconvolve(image, kernel, mode='same')  
+        
+            # TODO
+            # add img_convovle to sum_image
+            # DONE!
+            np.add(sum_image,img_convolve)
+            
+            subplot(1, 4, num); plt.imshow(img_convolve, cmap='jet', vmin=0.0, vmax=0.5) 
+            plt.colorbar(orientation='horizontal', ticks=[0.0, 0.5])
+            
+    # TODO compute the averaged values (divide sum_image by the number of kernels = 16)
+    # DONE!
+    averaged_image = np.divide(sum_image, 16.0)
+
+    plt.show()
+    figure(figsize=(4.0 * scale, 4.0 * scale), dpi=80)
+    subplot(1, 1, 1); plt.imshow(averaged_image, cmap='jet', vmin=0.0, vmax=0.5) 
+    plt.colorbar(orientation='horizontal', ticks=[0.0, 0.25, 0.5])
+    plt.show()
+
+
+
+def displayGabors():
+    collection1 = io.imread_collection("images/exercise3/base/*.jpg") 
+    collection2 = io.imread_collection("images/exercise3/query/*.jpg")  
+    images1 = [collection1[i] for i in range(0, len(collection1))]
+    images2 = [collection2[i] for i in range(0, len(collection2))]
+    images = images1 + images2
+    for image in images:
+        figure(figsize=(10.0 * scale, 5.0 * scale), dpi=80)
+        gabor_image = applyGaborsFilters(image)
+        subplot(1, 2, 1);
+        plt.imshow(image) 
+        subplot(1, 2, 2);
+        plt.imshow(gabor_image, cmap='jet', vmin=0.0, vmax=0.5)
+        plt.show()
+
+def exercise3():
+    print("Exercise 3")
+    print("\tExercise 3.1, 3.2") 
+    generateOutputImageUseGaborFilter(None)
+    print("\tExercise 3.3")
+    displayGabors()
+    
 #===== EXECUTE MAIN ======
 
 def main():
