@@ -15,13 +15,11 @@ from scipy import spatial
 from pylab import *
 import random    
 
-
 class LabImage:
     def __init__(self, img, ID):
         self.img = img
         self.ID = str(ID)
         self.featuresValues = []
-
 
 class Exercise:
     def __init__(self, folderPath, featuresNames = None, featuresExtractor = None):
@@ -151,43 +149,43 @@ def euclideanSimilarity(featuresQuery, featuresImage):
 def exercise1():
     print("Exercise 1")
 
-    #print("\tExercise 1.1")
-    #e1 = Exercise("images/exercise1/intro/", featuresNames_MeanColors, featuresExtractor_MeanColors)
-    #e1.display(scale = 1.0)
+    print("\tExercise 1.1")
+    e1 = Exercise("images/exercise1/intro/", featuresNames_MeanColors, featuresExtractor_MeanColors)
+    e1.display(scale = 1.0)
 
-    #print("\tExercise 1.2")
-    #e1 = Exercise("images/exercise1/intro/", featuresNames_StdColors, featuresExtractor_StdColors)
-    #e1.display(scale = 1.0)
+    print("\tExercise 1.2")
+    e1 = Exercise("images/exercise1/intro/", featuresNames_StdColors, featuresExtractor_StdColors)
+    e1.display(scale = 1.0)
 
-    #print("\tExercise 1.3")
-    #e1 = Exercise("images/exercise1/intro/", featuresNames_SkewColors, featuresExtractor_SkewColors)
-    #e1.display(scale = 1.0)
+    print("\tExercise 1.3")
+    e1 = Exercise("images/exercise1/intro/", featuresNames_SkewColors, featuresExtractor_SkewColors)
+    e1.display(scale = 1.0)
 
-    #print("\tExercise 1.4")
-    #e1 = Exercise("images/exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
-    #e1.display(scale = 1.0)
-
-    #print("\tExercise 1.5")
+    print("\tExercise 1.4")
     e1 = Exercise("images/exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
-    #e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity )
+    e1.display(scale = 1.0)
 
-    #print("\tExercise 1.6")
-    #e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity)
+    print("\tExercise 1.5")
+    e1 = Exercise("images/exercise1/base/", featuresNames_MeanColors, featuresExtractor_MeanColors)
+    e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity )
 
-    #print("\tExercise 1.7")
-    #e1.searchForImage("images/exercise1/query/", "q3_blue.jpg", cosineSimilarity)
+    print("\tExercise 1.6")
+    e1.searchForImage("images/exercise1/query/", "q2_green.jpg", cosineSimilarity)
 
-    #print("\tExercise 1.8")
-    #e1.searchForImage("images/exercise1/query/", "q4_white.jpg", cosineSimilarity)
+    print("\tExercise 1.7")
+    e1.searchForImage("images/exercise1/query/", "q3_blue.jpg", cosineSimilarity)
 
-    #print("\tExercise 1.9")
-    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", cosineSimilarity)
+    print("\tExercise 1.8")
+    e1.searchForImage("images/exercise1/query/", "q4_white.jpg", cosineSimilarity)
 
-    #print("\tExercise 1.10")
-    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
+    print("\tExercise 1.9")
+    e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", cosineSimilarity)
 
-    #print("\tExercise 1.11")
-    #e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
+    print("\tExercise 1.10")
+    e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
+
+    print("\tExercise 1.11")
+    e1.searchForImage("images/exercise1/query/", "q5_dark.jpg", euclideanSimilarity)
 
     print("\tExercise 1.12")
     e1.searchForImage("images/exercise1/query/", "q4_white.jpg", euclideanSimilarity)
@@ -257,16 +255,16 @@ def runBaseGaborFilterScript():
     #freqs = [0.2, 0.3, 0.6, 0.9] #my example
     for angle in angles:
         kernels_row = []
-        figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
+        #figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
         num = 0
         for freq in freqs:
             num += 1
             kernel = np.real(gabor_kernel(freq, theta=angle / 90.0 * 0.5 * np.pi, sigma_x=std, sigma_y=std))
             kernels_row.append(kernel)
-            subplot(1, 4, num); plt.imshow(kernel, cmap='jet', vmin=-0.002, vmax=0.002) 
-            plt.colorbar(orientation='horizontal', ticks = [-0.002, 0.0, 0.002])
+            #subplot(1, 4, num); plt.imshow(kernel, cmap='jet', vmin=-0.002, vmax=0.002) 
+            #plt.colorbar(orientation='horizontal', ticks = [-0.002, 0.0, 0.002])
         kernels.append(kernels_row)
-    plt.show()
+    #plt.show()
 
 def generateOutputImageUseGaborFilter(image):
     runBaseGaborFilterScript()
@@ -276,14 +274,14 @@ def generateOutputImageUseGaborFilter(image):
     else:
         image = rgb2gray(image)
 
-    io.imshow(image)
+    #io.imshow(image)
 
     # TODO: init sum_image with zeros (np. zero). The matrix must be of a proper size (image.shape)
     # DONE!
     sum_image = np.zeros(image.shape)
     
     for row in kernels:
-        figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
+        #figure(figsize=(14.0 * scale, 4.0 * scale), dpi=80)
         num = 0
         for kernel in row:
             num += 1
@@ -294,19 +292,20 @@ def generateOutputImageUseGaborFilter(image):
             # DONE!
             np.add(sum_image,img_convolve)
             
-            subplot(1, 4, num); plt.imshow(img_convolve, cmap='jet', vmin=0.0, vmax=0.5) 
-            plt.colorbar(orientation='horizontal', ticks=[0.0, 0.5])
+            #subplot(1, 4, num); plt.imshow(img_convolve, cmap='jet', vmin=0.0, vmax=0.5) 
+            #plt.colorbar(orientation='horizontal', ticks=[0.0, 0.5])
             
     # TODO compute the averaged values (divide sum_image by the number of kernels = 16)
     # DONE!
     averaged_image = np.divide(sum_image, 16.0)
 
-    plt.show()
-    figure(figsize=(4.0 * scale, 4.0 * scale), dpi=80)
-    subplot(1, 1, 1); plt.imshow(averaged_image, cmap='jet', vmin=0.0, vmax=0.5) 
-    plt.colorbar(orientation='horizontal', ticks=[0.0, 0.25, 0.5])
-    plt.show()
+    #plt.show()
+    #figure(figsize=(4.0 * scale, 4.0 * scale), dpi=80)
+    #subplot(1, 1, 1); plt.imshow(averaged_image, cmap='jet', vmin=0.0, vmax=0.5) 
+    #plt.colorbar(orientation='horizontal', ticks=[0.0, 0.25, 0.5])
+    #plt.show()
 
+    return averaged_image
 
 
 def displayGabors():
@@ -324,18 +323,53 @@ def displayGabors():
         plt.imshow(gabor_image, cmap='jet', vmin=0.0, vmax=0.5)
         plt.show()
 
+featuresNames_Texture = ["Mean", "Std", "Skew","Kurt"]
+
+def featuresExtractor_Texture(image):
+    featuresValues = []
+    img = applyGaborsFilters(image)
+    
+    mean = np.mean(image)
+    std = np.std(image)
+    skewValue = skew(image, axis=None)
+    kurt = kurtosis(image, axis=None)
+
+    featuresValues.append(mean)
+    featuresValues.append(std)
+    featuresValues.append(skewValue)
+    featuresValues.append(kurt)
+    #print(featuresValues)
+    
+    return featuresValues
+ 
+def weightedSumSimilarity(featuresQuery, featuresImage):
+    w = [1.0, 1.0, 1.0, 1.0]
+
+    for x in range(0, len(w)):
+        w[x] = abs(featuresQuery[x] - featuresImage[x])
+
+    score = max(w)
+
+    return score
+
 def exercise3():
     print("Exercise 3")
     print("\tExercise 3.1, 3.2") 
     generateOutputImageUseGaborFilter(None)
-    print("\tExercise 3.3")
+    print("\tExercise 3.3 3.4")
     displayGabors()
+    print("\tExercise 3.5")
+    e3 = Exercise("images/exercise3/base/", featuresNames_Texture, featuresExtractor_Texture)
+    e3.searchForImage("images/exercise3/query/", "q1.jpg", weightedSumSimilarity)
+    e3.searchForImage("images/exercise3/query/", "q2.jpg", weightedSumSimilarity)
+    e3.searchForImage("images/exercise3/query/", "q3.jpg", weightedSumSimilarity)
+    e3.searchForImage("images/exercise3/query/", "q4.jpg", weightedSumSimilarity)
     
 #===== EXECUTE MAIN ======
 
 def main():
-    #exercise1()
-    #exercise2()
+    exercise1()
+    exercise2()
     exercise3()
 
 main()
