@@ -127,15 +127,15 @@ featuresNames_StdColors =  ["red std", "green std", "blue std"]
 featuresNames_SkewColors = ["red skew", "green skew", "blue skew"]
 
 def featuresExtractor_MeanColors(image):
-    values = [np.mean(image[:,:,0]),0,0]
+    values = [np.mean(image[:,:,0]),np.mean(image[:,:,1]),np.mean(image[:,:,2])]
     return values
 
 def featuresExtractor_StdColors(image):
-    values = [np.std(image[:,:,0]),0,0]
+    values = [np.std(image[:,:,0]),np.std(image[:,:,1]),np.std(image[:,:,2])]
     return values
 
 def featuresExtractor_SkewColors(image):
-    values = [skew(image[:,:,0].ravel()), 0, 0 ]
+    values = [skew(image[:,:,0].ravel()), skew(image[:,:,1].ravel()), skew(image[:,:,2].ravel()) ]
     return values
 
 def cosineSimilarity( featuresQuery, featuresImage ):
