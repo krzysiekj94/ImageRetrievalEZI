@@ -208,7 +208,7 @@ norm = lambda x: -np.sign(x)*np.log10(np.abs(x))
 def featuresExtractor_Hu(image):
     img = rgb2gray(image)
     hu = moments_central(img)
-    hu = moments_central(hu)
+    hu = moments_normalized(hu)
     hu = moments_hu(hu)
     l = [norm(f) for f in hu]
     return l
@@ -365,8 +365,8 @@ def exercise3():
 #===== EXECUTE MAIN ======
 
 def main():
-    #exercise1()
+    exercise1()
     exercise2()
-    #exercise3()
+    exercise3()
 
 main()
