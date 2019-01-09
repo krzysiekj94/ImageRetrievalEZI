@@ -197,12 +197,9 @@ featuresNames_CentroidColors = ["red x", "red y",
 featuresNames_Hu = ["hu1", "hu2", "hu3","hu4", "hu5", "hu6","hu7"]
 
 def featuresExtractor_CentroidColors( image ):
-    valueList = []
-
-    for x in range(0, 6):
-        valueList.append( center_of_mass( image[x] ) )
-    valueList = [i[0] for i in valueList]
-        
+    valueList = [ list(center_of_mass(image[:,:,0])), list(center_of_mass(image[:,:,1])), list(center_of_mass(image[:,:,2])) ]
+    valueList = list(flatten(valueList))
+   
     return valueList
 
 norm = lambda x: -np.sign(x)*np.log10(np.abs(x))
@@ -368,8 +365,8 @@ def exercise3():
 #===== EXECUTE MAIN ======
 
 def main():
-    exercise1()
+    #exercise1()
     exercise2()
-    exercise3()
+    #exercise3()
 
 main()
