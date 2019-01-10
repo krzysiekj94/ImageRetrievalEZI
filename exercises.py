@@ -287,7 +287,7 @@ def generateOutputImageUseGaborFilter(image):
             # TODO
             # add img_convovle to sum_image
             # DONE!
-            np.add(sum_image,img_convolve)
+            sum_image = np.add(sum_image,img_convolve)
             
             #subplot(1, 4, num); plt.imshow(img_convolve, cmap='jet', vmin=0.0, vmax=0.5) 
             #plt.colorbar(orientation='horizontal', ticks=[0.0, 0.5])
