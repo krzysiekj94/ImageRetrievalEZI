@@ -341,13 +341,12 @@ def featuresExtractor_Texture(image):
  
 def weightedSumSimilarity(featuresQuery, featuresImage):
     w = [1.0, 1.0, 1.0, 1.0]
+    weightedSum = 0
 
     for x in range(0, len(w)):
-        w[x] = abs(featuresQuery[x] - featuresImage[x])
-
-    score = max(w)
-
-    return score
+        weightedSum += w[x]*abs(featuresQuery[x] - featuresImage[x])
+    
+    return weightedSum
 
 def exercise3():
     print("Exercise 3")
